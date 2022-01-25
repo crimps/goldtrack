@@ -25,8 +25,8 @@ import java.util.List;
 @Data
 public class GoldPrinceDto {
 
-    private Integer min;
-    private Integer max;
+    private Double min;
+    private Double max;
     private String heyue;
     private Date delay;
     private List<Prince> princeList;
@@ -34,9 +34,9 @@ public class GoldPrinceDto {
     @Data
     public static class Prince{
         Date time;
-        String data;
+        Double data;
 
-        public Prince(Date time, String data){
+        public Prince(Date time, Double data){
             this.time = time;
             this.data = data;
         }
@@ -44,14 +44,41 @@ public class GoldPrinceDto {
 
     /**
      * 获取实时金价
+     * @return
+     */
+    public Double getLastPrince(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date now = calendar.getTime();
+        Date maxTime = null;
+        Double data = null;
+        for(Prince prince : princeList){
+            Date time = prince.getTime();
+            if(null == maxTime){
+                maxTime = time;
+                data = prince.getData();
+            }else{
+                if(time.after(maxTime) && time.before(now) && time.before(delay)){
+                    maxTime = time;
+                    data = prince.getData();
+                }
+            }
+        }
+        return data;
+    }
+
+    /**
+     * 获取实时金价
      *
      * @return
      */
-    public String getLastPrince(){
+    public String getLastPrinceTip(){
         String lastPrince = "";
-        Date now = Calendar.getInstance().getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date now = calendar.getTime();
         Date maxTime = null;
-        String data = null;
+        Double data = null;
         for(Prince prince : princeList){
             Date time = prince.getTime();
             if(null == maxTime){

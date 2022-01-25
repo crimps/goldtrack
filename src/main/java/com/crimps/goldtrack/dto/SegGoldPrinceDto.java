@@ -21,9 +21,9 @@ import java.util.List;
 public class SegGoldPrinceDto {
 
     private List<String> times;
-    private Integer min;
-    private List<String> data;
-    private Integer max;
+    private Double min;
+    private List<Double> data;
+    private Double max;
     private String heyue;
     private String delaystr;
 }

@@ -1,7 +1,9 @@
 package com.crimps.goldtrack.util;
 
 import com.crimps.goldtrack.dto.GoldPrinceDto;
+import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
 import com.crimps.goldtrack.dto.SegGoldPrinceDto;
+import com.crimps.goldtrack.dto.SegHistoryGoldPrinceDto;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -34,7 +36,15 @@ import java.util.List;
  */
 public class GoldPrinceService {
 
+    /**
+     * 每日实时金价链接
+     */
     private final String GOLD_URL_SEG = "http://www.sge.com.cn/graph/quotations?instid=Au99.99";
+
+    /**
+     * 历史行情价格
+     */
+    private final String HISTORY_GOLD_URL_SEG = "http://www.sge.com.cn/graph/Dailyhq?instid=Au99.99";
 
 
     /**
@@ -63,7 +73,7 @@ public class GoldPrinceService {
         goldPrinceDto.setDelay(new SimpleDateFormat("yyyy年MM月dd日 HH:mm").parse(segGoldPrinceDto.getDelaystr()));
         goldPrinceDto.setPrinceList(new ArrayList<>());
         List<String> times = segGoldPrinceDto.getTimes();
-        List<String> datas = segGoldPrinceDto.getData();
+        List<Double> datas = segGoldPrinceDto.getData();
         if(null != times && null != datas){
             int length =times.size();
             if(length > datas.size()){
@@ -95,12 +105,10 @@ public class GoldPrinceService {
     private SegGoldPrinceDto getSegGoldPrince() throws IOException {
         SegGoldPrinceDto segGoldPrinceDto = null;
         OkHttpClient httpClient = new OkHttpClient();
-
         Request getRequest = new Request.Builder()
                 .url(GOLD_URL_SEG)
                 .get()
                 .build();
-
         Call call = httpClient.newCall(getRequest);
         Response response = call.execute();
         String goldStr = response.body().string();
@@ -109,5 +117,52 @@ public class GoldPrinceService {
             segGoldPrinceDto = gson.fromJson(goldStr, SegGoldPrinceDto.class);
         }
         return segGoldPrinceDto;
+    }
+
+
+    /**
+     * 获取标准黄金历史行情数据
+     *
+     * @return
+     */
+    public HistoryGoldPrinceDto getHistoryGoldPrince() throws IOException, ParseException {
+        HistoryGoldPrinceDto historyGoldPrinceDto = new HistoryGoldPrinceDto();
+        List<HistoryGoldPrinceDto.GoldPrince> goldPrinceList = new ArrayList<>();
+        historyGoldPrinceDto.setGoldPrinceList(goldPrinceList);
+        SegHistoryGoldPrinceDto segHistoryGoldPrinceDto = getSegHistoryGoldPrince();
+        for(List<String> list : segHistoryGoldPrinceDto.getTime()){
+            if(list.size() == 5){
+                HistoryGoldPrinceDto.GoldPrince goldPrince = new HistoryGoldPrinceDto.GoldPrince();
+                goldPrince.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(list.get(0)));
+                goldPrince.setOpen(Double.valueOf(list.get(1)));
+                goldPrince.setClose(Double.valueOf(list.get(2)));
+                goldPrince.setLowest(Double.valueOf(list.get(3)));
+                goldPrince.setHighest(Double.valueOf(list.get(4)));
+                historyGoldPrinceDto.getGoldPrinceList().add(goldPrince);
+            }
+        }
+        return historyGoldPrinceDto;
+    }
+
+    /**
+     * 获取上海黄金交易所历史行情数据
+     *
+     * @return
+     */
+    private SegHistoryGoldPrinceDto getSegHistoryGoldPrince() throws IOException {
+        SegHistoryGoldPrinceDto segHistoryGoldPrinceDto = new SegHistoryGoldPrinceDto();
+        OkHttpClient httpClient = new OkHttpClient();
+        Request getRequest = new Request.Builder()
+                .url(HISTORY_GOLD_URL_SEG)
+                .get()
+                .build();
+        Call call = httpClient.newCall(getRequest);
+        Response response = call.execute();
+        String historyGoldStr = response.body().string();
+        if(StringUtils.isNotBlank(historyGoldStr)){
+            Gson gson = new Gson();
+            segHistoryGoldPrinceDto = gson.fromJson(historyGoldStr, SegHistoryGoldPrinceDto.class);
+        }
+        return segHistoryGoldPrinceDto;
     }
 }
