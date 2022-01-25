@@ -3,7 +3,7 @@ package com.crimps.goldtrack.util;
 import java.awt.*;
 
 /**
- * <p>标题： </p>
+ * <p>标题： 系统消息提示 </p>
  * <p>功能： </p>
  * <p>版权： Copyright (c) 2022</p>
  * <p>公司: 厦门象屿科技有限公司</p>
@@ -38,13 +38,13 @@ public class SystemNotice {
      * @return
      */
     private static TrayIcon getTrayIcon(){
-        if(null != trayIcon){
+        if(null == trayIcon){
             //Obtain only one instance of the SystemTray object
             SystemTray tray = SystemTray.getSystemTray();
             // If you want to create an icon in the system tray to preview
             Image image = Toolkit.getDefaultToolkit().createImage("gold.png");
 
-            TrayIcon trayIcon = new TrayIcon(image, "Gold Track");
+            trayIcon = new TrayIcon(image, "Gold Track");
             //Let the system resize the image if needed
             trayIcon.setImageAutoSize(true);
             //Set tooltip text for the tray icon
