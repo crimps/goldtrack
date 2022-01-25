@@ -4,7 +4,9 @@ import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>标题： 策略服务 </p>
@@ -29,8 +31,8 @@ public class StrategyService {
      * @param historyGoldPrinceDto
      * @return
      */
-    public String historyTip(GoldPrinceDto goldPrinceDto, HistoryGoldPrinceDto historyGoldPrinceDto, Date startTime){
-        String historyTip = "";
+    public List<String> historyTip(GoldPrinceDto goldPrinceDto, HistoryGoldPrinceDto historyGoldPrinceDto, Date startTime){
+        List<String> tipList = new ArrayList<>();
         Double lastPrince = goldPrinceDto.getLastPrince();
         Double lowNum = 0d;
         Double highNum = 0d;
@@ -54,7 +56,8 @@ public class StrategyService {
         numberFormat.setMaximumFractionDigits(2);
         Double lowRate = Double.valueOf(lowNum / totalNum * 100);
         Double highRate = Double.valueOf(highNum / totalNum) * 100;
-        historyTip = historyTip + "低于历史行情：" + numberFormat.format(lowRate) + "%;高于历史行情：" + numberFormat.format(highRate) + "%";
-        return historyTip;
+        tipList.add("低于历史行情：" + numberFormat.format(lowRate) + "%");
+        tipList.add("高于历史行情：" + numberFormat.format(highRate) + "%");
+        return tipList;
     }
 }

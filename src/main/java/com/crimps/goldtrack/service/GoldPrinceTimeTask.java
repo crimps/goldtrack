@@ -2,15 +2,16 @@ package com.crimps.goldtrack.service;
 
 import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
-import com.crimps.goldtrack.dto.SegGoldPrinceDto;
 import com.crimps.goldtrack.util.GoldPrinceService;
 import com.crimps.goldtrack.util.SystemNotice;
 
 import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimerTask;
+import java.util.List;
 
 /**
  * <p>标题： </p>
@@ -47,10 +48,12 @@ public class GoldPrinceTimeTask extends TimerTask {
             StrategyService strategyService = new StrategyService();
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_YEAR, -180);
-            String historyTip = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, calendar.getTime());
+            List<String> messageList = new ArrayList<>();
             String message = "Min:" + goldPrinceDto.getMin() + ", Max:" + goldPrinceDto.getMax();
-            message = message + " " + historyTip;
-            SystemNotice.displayTray(lastPrinceTip, message);
+            messageList.add(message);
+            List<String> historyTipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, calendar.getTime());
+            messageList.addAll(historyTipList);
+            SystemNotice.displayTray(lastPrinceTip, messageList);
         } catch (IOException | AWTException | ParseException e) {
             e.printStackTrace();
         }

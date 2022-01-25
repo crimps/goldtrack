@@ -1,6 +1,8 @@
 package com.crimps.goldtrack.util;
 
+
 import java.awt.*;
+import java.util.List;
 
 /**
  * <p>标题： 系统消息提示 </p>
@@ -24,11 +26,11 @@ public class SystemNotice {
      * 推送系统通知
      *
      * @param title
-     * @param message
+     * @param messageList
      * @throws AWTException
      */
-    public static void displayTray(String title, String message) throws AWTException {
-        // Display info notification:
+    public static void displayTray(String title, List<String> messageList) throws AWTException {
+        String message = getMessageToShow(messageList);
         getTrayIcon().displayMessage(title, message, TrayIcon.MessageType.INFO);
     }
 
@@ -56,5 +58,23 @@ public class SystemNotice {
             }
         }
         return trayIcon;
+    }
+
+    /**
+     * 系统消息格式化
+     *
+     * @param messageList
+     * @return
+     */
+    private static String getMessageToShow(List<String> messageList) {
+        int lineLength = 56;
+        StringBuffer messageBuffer = new StringBuffer("");
+        for(String message : messageList){
+            while (message.length() % lineLength > 0){
+                message += " ";
+            }
+            messageBuffer.append(message);
+        }
+        return messageBuffer.toString();
     }
 }
