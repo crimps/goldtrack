@@ -1,7 +1,9 @@
 package com.crimps.goldtrack;
 
 import com.crimps.goldtrack.service.GoldPrinceTimeTask;
+import com.crimps.goldtrack.util.ConfigService;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -21,11 +23,19 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public class GoldTrack {
 
+    /**
+     * 默认刷新时间间隔
+     */
     private static final Long period = 10 * 60 * 1000L;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         Timer timer = new Timer();
-        timer.schedule(new GoldPrinceTimeTask("segGold"), 0, period);
+        ConfigService configService = new ConfigService();
+        Long configPeriod = configService.getPeriod();
+        if(null == configPeriod){
+            configPeriod = period;
+        }
+        timer.schedule(new GoldPrinceTimeTask("segGold"), 0, configPeriod);
     }
 
 }

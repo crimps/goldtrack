@@ -18,14 +18,44 @@ import java.io.*;
  */
 public class ConfigService {
 
+    /**
+     * 金价阀值
+     */
+    private Double threshold;
+
+    /**
+     * 刷新间隔时间
+     */
+    private Long period;
+
+    /**
+     * 获取配置文件中的金价阀值
+     *
+     * @return
+     * @throws IOException
+     */
     public Double getGoldPringThreshold() throws IOException {
-        Double threshold = 360D;
-        String path = System.getProperty("user.dir")+ File.separator + "goldTrack.txt";
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
-        String line="";
-        while((line=br.readLine())!=null){
-            threshold = Double.valueOf(line);
+        if(null == threshold){
+            String path = System.getProperty("user.dir")+ File.separator + "goldTrack.txt";
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            String line="";
+            while((line=br.readLine())!=null){
+                threshold = Double.valueOf(line);
+            }
         }
         return threshold;
+    }
+
+    public Long getPeriod() throws IOException {
+        if(null == period){
+            String path = System.getProperty("user.dir")+ File.separator + "goldTrack.txt";
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            String line="";
+            while((line=br.readLine())!=null){
+                period = Long.valueOf(line) * 60 * 1000;
+                break;
+            }
+        }
+        return period;
     }
 }
