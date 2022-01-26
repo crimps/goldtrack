@@ -2,11 +2,13 @@ package com.crimps.goldtrack.service;
 
 import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
+import com.crimps.goldtrack.util.ConfigService;
 import com.crimps.goldtrack.util.GoldPrinceService;
 import com.crimps.goldtrack.util.SystemNotice;
 
 import java.awt.*;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
 import java.util.List;
@@ -58,6 +60,19 @@ public class GoldPrinceTimeTask extends TimerTask {
             Date before30Day = calendar.getTime();
             List<String> history30TipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, before30Day);
             messageList.addAll(history30TipList);
+            //阀值信息
+            ConfigService configService = new ConfigService();
+            Double threshold = configService.getGoldPringThreshold();
+            Double lastPrince = goldPrinceDto.getLastPrince();
+            String thresholdTip = "";
+            NumberFormat numberFormat = NumberFormat.getNumberInstance();
+            numberFormat.setMaximumFractionDigits(2);
+            if(lastPrince.compareTo(threshold) > 0){
+                thresholdTip = "高于预设阀值[" + threshold + "] : " + numberFormat.format(lastPrince - threshold) + "↑";
+            }else{
+                thresholdTip = "低于预设阀值[" + threshold + "] : " + numberFormat.format(threshold - lastPrince) + "↓";
+            }
+            messageList.add(thresholdTip);
             SystemNotice.displayTray(lastPrinceTip, messageList);
         } catch (IOException | AWTException | ParseException e) {
             e.printStackTrace();

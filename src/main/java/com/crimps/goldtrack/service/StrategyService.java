@@ -58,8 +58,8 @@ public class StrategyService {
         Double lowRate = Double.valueOf(lowNum / totalNum * 100);
         Double highRate = Double.valueOf(highNum / totalNum) * 100;
         long day = (Calendar.getInstance().getTime().getTime() - startTime.getTime()) / 24 / 60 / 60 / 1000;
-        String tipStr = "近" + formatDay(day) + "天 : " + "低于:" + numberFormat.format(lowRate) + "%，";
-        tipStr += "高于:" + numberFormat.format(highRate) + "%";
+        String tipStr = "近" + formatDay(day) + "天 : " + "低于: " + numberFormat.format(lowRate) + "%，";
+        tipStr += "高于: " + numberFormat.format(highRate) + "%";
         tipList.add(tipStr);
         return tipList;
     }
