@@ -49,7 +49,7 @@ public class SystemNotice {
             //Let the system resize the image if needed
             trayIcon.setImageAutoSize(true);
             //Set tooltip text for the tray icon
-            trayIcon.setToolTip("Gold Track");
+            trayIcon.setToolTip("Gold Track：黄金中自有市中心大别墅、跑车、收租");
             try {
                 tray.add(trayIcon);
             } catch (AWTException e) {
