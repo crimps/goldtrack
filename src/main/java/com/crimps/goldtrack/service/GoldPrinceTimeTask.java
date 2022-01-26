@@ -8,9 +8,7 @@ import com.crimps.goldtrack.util.SystemNotice;
 import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -46,13 +44,20 @@ public class GoldPrinceTimeTask extends TimerTask {
             String lastPrinceTip = goldPrinceDto.getLastPrinceTip();
             HistoryGoldPrinceDto historyGoldPrinceDto = goldPrinceService.getHistoryGoldPrince();
             StrategyService strategyService = new StrategyService();
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_YEAR, -180);
             List<String> messageList = new ArrayList<>();
             String message = "Min:" + goldPrinceDto.getMin() + ", Max:" + goldPrinceDto.getMax();
             messageList.add(message);
-            List<String> historyTipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, calendar.getTime());
-            messageList.addAll(historyTipList);
+            //近7天行情
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, -7);
+            Date before7Day = calendar.getTime();
+            List<String> history7TipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, before7Day);
+            messageList.addAll(history7TipList);
+            //近30天行情
+            calendar.add(Calendar.DAY_OF_YEAR, -23);
+            Date before30Day = calendar.getTime();
+            List<String> history30TipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, before30Day);
+            messageList.addAll(history30TipList);
             SystemNotice.displayTray(lastPrinceTip, messageList);
         } catch (IOException | AWTException | ParseException e) {
             e.printStackTrace();

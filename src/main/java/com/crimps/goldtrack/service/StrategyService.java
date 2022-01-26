@@ -5,6 +5,7 @@ import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -56,8 +57,24 @@ public class StrategyService {
         numberFormat.setMaximumFractionDigits(2);
         Double lowRate = Double.valueOf(lowNum / totalNum * 100);
         Double highRate = Double.valueOf(highNum / totalNum) * 100;
-        tipList.add("低于历史行情：" + numberFormat.format(lowRate) + "%");
-        tipList.add("高于历史行情：" + numberFormat.format(highRate) + "%");
+        long day = (Calendar.getInstance().getTime().getTime() - startTime.getTime()) / 24 / 60 / 60 / 1000;
+        String tipStr = "近" + formatDay(day) + "天 : " + "低于:" + numberFormat.format(lowRate) + "%，";
+        tipStr += "高于:" + numberFormat.format(highRate) + "%";
+        tipList.add(tipStr);
         return tipList;
+    }
+
+    /**
+     * 格式化日期
+     *
+     * @param day
+     * @return
+     */
+    private String formatDay(long day){
+        String dayStr = String.valueOf(day);
+        if(day < 10){
+            dayStr = "  " + dayStr;
+        }
+        return dayStr;
     }
 }
