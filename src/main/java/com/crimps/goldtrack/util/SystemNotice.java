@@ -44,8 +44,7 @@ public class SystemNotice {
             //Obtain only one instance of the SystemTray object
             SystemTray tray = SystemTray.getSystemTray();
             // If you want to create an icon in the system tray to preview
-            Image image = Toolkit.getDefaultToolkit().createImage("gold.png");
-
+            Image image = Toolkit.getDefaultToolkit().createImage(ClassLoader.getSystemResource("gold.png"));
             trayIcon = new TrayIcon(image, "Gold Track");
             //Let the system resize the image if needed
             trayIcon.setImageAutoSize(true);
