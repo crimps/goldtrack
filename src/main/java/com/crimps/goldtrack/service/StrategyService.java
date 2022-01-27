@@ -70,7 +70,7 @@ public class StrategyService {
         //价位比例
         Double lowRate = Double.valueOf(lowNum / totalNum * 100);
         Double highRate = Double.valueOf(highNum / totalNum) * 100;
-        String tipStr = "近" + formatDay(day) + "天 : " + "低于: " + numberFormat.format(lowRate) + "%，";
+        String tipStr = "╰─         " + "低于: " + numberFormat.format(lowRate) + "%，";
         tipStr += "高于: " + numberFormat.format(highRate) + "%";
         tipList.add(tipStr);
         return tipList;
