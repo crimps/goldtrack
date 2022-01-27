@@ -48,7 +48,7 @@ public class GoldPrinceTimeTask extends TimerTask {
             StrategyService strategyService = new StrategyService();
             List<String> messageList = new ArrayList<>();
             String message = "Min:" + goldPrinceDto.getMin() + ", Max:" + goldPrinceDto.getMax();
-            messageList.add(message);
+            lastPrinceTip = lastPrinceTip + " " + message;
             //近7天行情
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_YEAR, -7);

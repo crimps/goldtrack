@@ -38,11 +38,19 @@ public class StrategyService {
         Double lowNum = 0d;
         Double highNum = 0d;
         Double totalNum = 0d;
+        Double minPrince = 10000d;
+        Double maxPrince = 0d;
         for(HistoryGoldPrinceDto.GoldPrince goldPrince : historyGoldPrinceDto.getGoldPrinceList()){
             if (startTime.before(goldPrince.getDate())){
                 totalNum++;
                 Double lowest = goldPrince.getLowest();
                 Double highest = goldPrince.getHighest();
+                if(minPrince.compareTo(lowest) > 0){
+                    minPrince = lowest;
+                }
+                if(maxPrince.compareTo(highest) < 0){
+                    maxPrince = highest;
+                }
                 //低于当天最低价
                 if(Double.compare(lastPrince, lowest) < 0){
                     lowNum++;
@@ -53,11 +61,15 @@ public class StrategyService {
                 }
             }
         }
+        long day = (Calendar.getInstance().getTime().getTime() - startTime.getTime()) / 24 / 60 / 60 / 1000;
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
         numberFormat.setMaximumFractionDigits(2);
+        //最低、高价
+        String minMaxTip = "近" + formatDay(day) + "天 : Min:" + minPrince + ", Max:" + maxPrince;
+        tipList.add(minMaxTip);
+        //价位比例
         Double lowRate = Double.valueOf(lowNum / totalNum * 100);
         Double highRate = Double.valueOf(highNum / totalNum) * 100;
-        long day = (Calendar.getInstance().getTime().getTime() - startTime.getTime()) / 24 / 60 / 60 / 1000;
         String tipStr = "近" + formatDay(day) + "天 : " + "低于: " + numberFormat.format(lowRate) + "%，";
         tipStr += "高于: " + numberFormat.format(highRate) + "%";
         tipList.add(tipStr);

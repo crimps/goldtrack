@@ -91,8 +91,8 @@ public class GoldPrinceDto {
                 }
             }
         }
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        lastPrince = dateFormat.format(maxTime) + " 金价：" + data;
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        lastPrince = "金价" + data;
         return lastPrince;
     }
 }
