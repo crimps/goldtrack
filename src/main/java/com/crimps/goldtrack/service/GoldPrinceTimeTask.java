@@ -48,15 +48,10 @@ public class GoldPrinceTimeTask extends TimerTask {
             StrategyService strategyService = new StrategyService();
             List<String> messageList = new ArrayList<>();
             String message = "Min:" + goldPrinceDto.getMin() + ", Max:" + goldPrinceDto.getMax();
-            lastPrinceTip = lastPrinceTip + " " + message;
-            //近7天行情
+            messageList.add(message);
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_YEAR, -7);
-            Date before7Day = calendar.getTime();
-            List<String> history7TipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, before7Day);
-            messageList.addAll(history7TipList);
             //近30天行情
-            calendar.add(Calendar.DAY_OF_YEAR, -23);
+            calendar.add(Calendar.DAY_OF_YEAR, -30);
             Date before30Day = calendar.getTime();
             List<String> history30TipList = strategyService.historyTip(goldPrinceDto, historyGoldPrinceDto, before30Day);
             messageList.addAll(history30TipList);
