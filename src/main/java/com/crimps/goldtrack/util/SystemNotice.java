@@ -29,9 +29,9 @@ public class SystemNotice {
      * @param messageList
      * @throws AWTException
      */
-    public static void displayTray(String title, List<String> messageList) throws AWTException {
+    public static void displayTray(String title, List<String> messageList, TrayIcon.MessageType messageType) throws AWTException {
         String message = getMessageToShow(messageList);
-        getTrayIcon().displayMessage(title, message, TrayIcon.MessageType.INFO);
+        getTrayIcon().displayMessage(title, message, messageType);
     }
 
     /**

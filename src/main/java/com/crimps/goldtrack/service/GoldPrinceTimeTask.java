@@ -62,13 +62,19 @@ public class GoldPrinceTimeTask extends TimerTask {
             String thresholdTip = "";
             NumberFormat numberFormat = NumberFormat.getNumberInstance();
             numberFormat.setMaximumFractionDigits(2);
+            boolean flag = false;
             if(lastPrince.compareTo(threshold) > 0){
                 thresholdTip = "高于预设阀值[" + threshold + "] : " + numberFormat.format(lastPrince - threshold) + "↑";
             }else{
+                flag = true;
                 thresholdTip = "低于预设阀值[" + threshold + "] : " + numberFormat.format(threshold - lastPrince) + "↓";
             }
             messageList.add(thresholdTip);
-            SystemNotice.displayTray(lastPrinceTip, messageList);
+            if(flag){
+                SystemNotice.displayTray(lastPrinceTip, messageList, TrayIcon.MessageType.WARNING);
+            }else{
+                SystemNotice.displayTray(lastPrinceTip, messageList, TrayIcon.MessageType.INFO);
+            }
         } catch (IOException | AWTException | ParseException e) {
             e.printStackTrace();
         }
