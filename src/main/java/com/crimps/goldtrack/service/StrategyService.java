@@ -63,7 +63,7 @@ public class StrategyService {
         }
         long day = (Calendar.getInstance().getTime().getTime() - startTime.getTime()) / 24 / 60 / 60 / 1000;
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        numberFormat.setMaximumFractionDigits(2);
+        numberFormat.setMaximumFractionDigits(1);
         //最低、高价
         String minMaxTip = "近" + formatDay(day) + "天 : Min:" + minPrince + ", Max:" + maxPrince;
         tipList.add(minMaxTip);
