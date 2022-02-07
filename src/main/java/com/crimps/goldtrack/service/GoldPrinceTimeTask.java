@@ -2,8 +2,10 @@ package com.crimps.goldtrack.service;
 
 import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
+import com.crimps.goldtrack.dto.ICBCRuyiGoldPrinceDto;
 import com.crimps.goldtrack.util.ConfigService;
 import com.crimps.goldtrack.util.GoldPrinceService;
+import com.crimps.goldtrack.util.ICBCGoldPrinceService;
 import com.crimps.goldtrack.util.SystemNotice;
 
 import java.awt.*;
@@ -41,9 +43,13 @@ public class GoldPrinceTimeTask extends TimerTask {
     @Override
     public void run() {
         GoldPrinceService goldPrinceService = new GoldPrinceService();
+        ICBCGoldPrinceService icbcGoldPrinceService = new ICBCGoldPrinceService();
         try {
+            StringBuffer titleTip = new StringBuffer("");
+            ICBCRuyiGoldPrinceDto icbcRuyiGoldPrinceDto = icbcGoldPrinceService.getICBCRuyiGoldPrince();
+            Double ruyiPrince = icbcGoldPrinceService.getLastICBCRuyiPrince(icbcRuyiGoldPrinceDto);
             GoldPrinceDto goldPrinceDto = goldPrinceService.getGoldPrinceBySeg();
-            String lastPrinceTip = goldPrinceDto.getLastPrinceTip();
+            titleTip.append("工行如意金:").append(ruyiPrince).append(" ").append("国际金价:").append(goldPrinceDto.getLastPrince());
             HistoryGoldPrinceDto historyGoldPrinceDto = goldPrinceService.getHistoryGoldPrince();
             StrategyService strategyService = new StrategyService();
             List<String> messageList = new ArrayList<>();
@@ -71,9 +77,9 @@ public class GoldPrinceTimeTask extends TimerTask {
             }
             messageList.add(thresholdTip);
             if(flag){
-                SystemNotice.displayTray(lastPrinceTip, messageList, TrayIcon.MessageType.WARNING);
+                SystemNotice.displayTray(titleTip.toString(), messageList, TrayIcon.MessageType.WARNING);
             }else{
-                SystemNotice.displayTray(lastPrinceTip, messageList, TrayIcon.MessageType.INFO);
+                SystemNotice.displayTray(titleTip.toString(), messageList, TrayIcon.MessageType.INFO);
             }
         } catch (IOException | AWTException | ParseException e) {
             e.printStackTrace();
