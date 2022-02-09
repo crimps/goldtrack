@@ -1,11 +1,10 @@
 package com.crimps.goldtrack;
 
 import com.crimps.goldtrack.service.GoldPrinceTimeTask;
-import com.crimps.goldtrack.util.ConfigService;
+import com.crimps.goldtrack.service.ConfigService;
 
 import java.io.IOException;
 import java.util.Timer;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * <p>标题：  </p>

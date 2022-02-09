@@ -1,4 +1,4 @@
-package com.crimps.goldtrack.util;
+package com.crimps.goldtrack.service;
 
 import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;

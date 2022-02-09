@@ -1,4 +1,4 @@
-package com.crimps.goldtrack.util;
+package com.crimps.goldtrack.service;
 
 import java.io.*;
 
@@ -6,11 +6,11 @@ import java.io.*;
  * <p>标题： 配置相关服务类 </p>
  * <p>功能： </p>
  * <p>版权： Copyright (c) 2022</p>
- * <p>公司: 厦门象屿科技有限公司</p>
+ * <p>公司: </p>
  * <p>创建日期：2022/1/26 9:53</p>
- * <p>类全名：com.crimps.goldtrack.util.ConfigService</p>
+ * <p>类全名：com.crimps.goldtrack.service.ConfigService</p>
  * <p>
- * 作者：chenwz
+ * 作者：
  * 初审：
  * 复审：
  *

@@ -1,4 +1,4 @@
-package com.crimps.goldtrack.util;
+package com.crimps.goldtrack.service;
 
 import com.crimps.goldtrack.dto.ICBCRuyiGoldPrinceDto;
 import com.google.gson.Gson;
@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * <p>标题： </p>
+ * <p>标题： 工行</p>
  * <p>功能： </p>
  * <p>版权： Copyright (c) 2022</p>
- * <p>公司: 厦门象屿科技有限公司</p>
+ * <p>公司: </p>
  * <p>创建日期：2022/2/7 16:45</p>
  * <p>类全名：com.crimps.goldtrack.service.ICBCGoldPrinceService</p>
  * <p>

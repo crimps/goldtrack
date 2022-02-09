@@ -3,9 +3,6 @@ package com.crimps.goldtrack.service;
 import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
 import com.crimps.goldtrack.dto.ICBCRuyiGoldPrinceDto;
-import com.crimps.goldtrack.util.ConfigService;
-import com.crimps.goldtrack.util.GoldPrinceService;
-import com.crimps.goldtrack.util.ICBCGoldPrinceService;
 import com.crimps.goldtrack.util.SystemNotice;
 
 import java.awt.*;
@@ -16,7 +13,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * <p>标题： </p>
+ * <p>标题： 金价定时任务 </p>
  * <p>功能： </p>
  * <p>版权： Copyright (c) 2022</p>
  * <p>公司: </p>
