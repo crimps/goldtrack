@@ -4,6 +4,7 @@ import com.crimps.goldtrack.dto.GoldPrinceDto;
 import com.crimps.goldtrack.dto.HistoryGoldPrinceDto;
 import com.crimps.goldtrack.dto.SegGoldPrinceDto;
 import com.crimps.goldtrack.dto.SegHistoryGoldPrinceDto;
+import com.crimps.goldtrack.util.OkHttpClientUtils;
 import com.google.gson.Gson;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -104,7 +105,7 @@ public class GoldPrinceService {
      */
     private SegGoldPrinceDto getSegGoldPrince() throws IOException {
         SegGoldPrinceDto segGoldPrinceDto = null;
-        OkHttpClient httpClient = new OkHttpClient();
+        OkHttpClient httpClient = OkHttpClientUtils.getUnsafeOkHttpClient();
         Request getRequest = new Request.Builder()
                 .url(GOLD_URL_SEG)
                 .get()
@@ -151,7 +152,7 @@ public class GoldPrinceService {
      */
     private SegHistoryGoldPrinceDto getSegHistoryGoldPrince() throws IOException {
         SegHistoryGoldPrinceDto segHistoryGoldPrinceDto = new SegHistoryGoldPrinceDto();
-        OkHttpClient httpClient = new OkHttpClient();
+        OkHttpClient httpClient = OkHttpClientUtils.getUnsafeOkHttpClient();
         Request getRequest = new Request.Builder()
                 .url(HISTORY_GOLD_URL_SEG)
                 .get()

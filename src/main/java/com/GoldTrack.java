@@ -1,4 +1,4 @@
-package com.crimps.goldtrack;
+package com;
 
 import com.crimps.goldtrack.service.GoldPrinceTimeTask;
 import com.crimps.goldtrack.service.ConfigService;
