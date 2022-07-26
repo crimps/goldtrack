@@ -9,14 +9,12 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * <p>标题： </p>
- * <p>功能： </p>
+ * <p>标题： 忽略SSL证书工具类 </p>
+ * <p>功能： 忽略SSL证书工具类 </p>
  * <p>版权： Copyright (c) 2022</p>
- * <p>公司: 厦门象屿科技有限公司</p>
- * <p>创建日期：2022/7/26 15:50</p>
  * <p>类全名：com.crimps.goldtrack.util.OkHttpClient</p>
  * <p>
- * 作者：chenwz
+ * 作者：crimps
  * 初审：
  * 复审：
  *
